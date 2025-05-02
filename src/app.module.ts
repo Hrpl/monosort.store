@@ -7,6 +7,7 @@ import { UsersModule } from './user/user.module';
 import { Product } from './product/product.entity';
 import { ProductsModule } from './product/product.module';
 import { Provider } from './provider/provider.entiry';
+import { ProvidersModule } from './provider/provider.module';
 
 @Module({
   imports: [
@@ -18,10 +19,12 @@ import { Provider } from './provider/provider.entiry';
       password: '0000',
       database: 'monosort_store',
       entities: [User, Product, Provider],
-      synchronize: true,
+      autoLoadEntities: true,
+      logging: true,
     }),
     UsersModule,
     ProductsModule,
+    ProvidersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
