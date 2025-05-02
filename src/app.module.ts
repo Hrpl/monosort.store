@@ -4,6 +4,9 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/user.entity';
 import { UsersModule } from './user/user.module';
+import { Product } from './product/product.entity';
+import { ProductsModule } from './product/product.module';
+import { Provider } from './provider/provider.entiry';
 
 @Module({
   imports: [
@@ -14,10 +17,11 @@ import { UsersModule } from './user/user.module';
       username: 'postgres',
       password: '0000',
       database: 'monosort_store',
-      entities: [User],
+      entities: [User, Product, Provider],
       synchronize: true,
     }),
     UsersModule,
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
