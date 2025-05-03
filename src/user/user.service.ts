@@ -4,6 +4,8 @@ import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { IUserRepository } from './user.iservice';
 import { UserUpdateDTO } from './dto/user.update';
+import { UserModel } from './user.model';
+import { LoginRequest } from './dto/user.login';
 
 @Injectable()
 export class UserService implements IUserRepository {
@@ -12,7 +14,15 @@ export class UserService implements IUserRepository {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async create(user: User): Promise<User> {
+  async login(request: LoginRequest): Promise<boolean> {
+    let result = await this.userRepository.findOne({
+      where: {email: request.login, password: request.password}
+    })
+
+    return !!result;
+  }
+
+  async create(user: UserModel): Promise<UserModel> {
     return this.userRepository.save(user);
   }
 
