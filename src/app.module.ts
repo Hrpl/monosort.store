@@ -6,7 +6,7 @@ import { User } from './user/user.entity';
 import { UsersModule } from './user/user.module';
 import { Product } from './product/product.entity';
 import { ProductsModule } from './product/product.module';
-import { Provider } from './provider/provider.entiry';
+import { Provider } from './provider/provider.entity';
 import { ProvidersModule } from './provider/provider.module';
 
 @Module({
