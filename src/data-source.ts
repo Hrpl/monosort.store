@@ -9,7 +9,7 @@ export const AppDataSource = new DataSource({
     host: 'localhost',
     port: 5432,
     username: 'postgres',
-    password: '2208',
+    password: '0000',
     database: 'monosort_store',
     entities: [User, Product, Provider],
     logging: true,

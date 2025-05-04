@@ -4,6 +4,7 @@ import { Product } from './product.entity';
 import { Repository } from 'typeorm';
 import { IProductRepository } from './product.iservice';
 import { ProductUpdateDTO } from './dto/product.update';
+import { CreateProductDTO } from './dto/create.product';
 
 @Injectable()
 export class ProductService implements IProductRepository {
@@ -11,24 +12,24 @@ export class ProductService implements IProductRepository {
     @InjectRepository(Product)
     private prodcutRepository: Repository<Product>,
   ) {}
-  
-  update(arg0: number, dto: ProductUpdateDTO): unknown {
-    throw new Error('Method not implemented.');
+
+  update(id: number, dto: ProductUpdateDTO): unknown {
+    return this.prodcutRepository.update(id, dto);
   }
 
-  create(user: Product): Promise<Product> {
-    throw new Error('Method not implemented.');
+  async create(product: CreateProductDTO): Promise<CreateProductDTO> {
+    return this.prodcutRepository.save(product);
   }
 
-  findOne(arg0: number): unknown {
-    throw new Error('Method not implemented.');
+  findOne(id: number): unknown {
+    return this.prodcutRepository.findOneBy({ id });
   }
 
-  remove(arg0: number): unknown {
-    throw new Error('Method not implemented.');
+  remove(id: number): unknown {
+    return this.prodcutRepository.delete(id);
   }
 
   findAll(): Promise<Product[]> {
-    throw new Error('Method not implemented.');
+    return this.prodcutRepository.find();
   }
 }
