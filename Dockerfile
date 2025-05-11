@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Открываем порт, который использует приложение
-EXPOSE 8080
+EXPOSE 8041
 
 # Запускаем приложение
 CMD ["npm", "run", "start"]

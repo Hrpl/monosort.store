@@ -12,5 +12,5 @@ services:
     networks:
       - mono
     ports:
-      - "8080:8080"
+      - "8041:8041"
     restart: unless-stopped
