@@ -27,11 +27,11 @@ export class UserController {
   }
 
   @Post('login')
-  @ApiBody({type: LoginRequest})
-  @ApiOperation({summary: 'Login user'})
+  @ApiBody({ type: LoginRequest })
+  @ApiOperation({ summary: ' Login user ' })
   @HttpCode(200)
-  async loginUser(@Body() login: LoginRequest): Promise<boolean> {
-    return await this.userService.login(login);
+  async loginUser(@Body() login: LoginRequest): Promise<object> {
+    const result = await this.userService.login(login);
+    return { login: result };
   }
-
 }

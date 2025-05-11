@@ -1,0 +1,16 @@
+version: '3.8'
+
+networks:
+  mono:
+   external: true
+   name: mono
+
+services:
+  # Сервис NestJS
+  app:
+    build: .
+    networks:
+      - mono
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
