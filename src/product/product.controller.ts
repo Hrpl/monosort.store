@@ -31,8 +31,8 @@ export class ProductController {
 
   @Get('any')
   @ApiOperation({ summary: 'Get all product' })
-  async getAny(): Promise<Product[]> {
-    return await this.productService.findAll();
+  async getAny(@Query('id') id: number): Promise<Product | null> {
+    return await this.productService.findOne(id);
   }
 
   @Post()

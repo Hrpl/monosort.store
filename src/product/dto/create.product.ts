@@ -4,7 +4,7 @@ export class CreateProductDTO {
   @ApiProperty()
   id: number;
   @ApiProperty()
-  provider_id: number;
+  providerId: number;
   @ApiProperty()
   name: string;
   @ApiProperty()

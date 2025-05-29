@@ -21,7 +21,7 @@ export class ProductService implements IProductRepository {
     return this.prodcutRepository.save(product);
   }
 
-  findOne(id: number): unknown {
+  findOne(id: number): Promise<Product | null> {
     return this.prodcutRepository.findOneBy({ id });
   }
 

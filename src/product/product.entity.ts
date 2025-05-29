@@ -1,5 +1,12 @@
+import { SupplyProduct } from '../supply/supply.product.entity';
 import { Provider } from './../provider/provider.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 
 @Entity()
 export class Product {
@@ -8,6 +15,9 @@ export class Product {
 
   @ManyToOne(() => Provider, (provider) => provider.id)
   provider: Provider;
+
+  @OneToMany(() => SupplyProduct, (supplyProduct) => supplyProduct.product)
+  supplyProduct: SupplyProduct[];
 
   @Column()
   name: string;

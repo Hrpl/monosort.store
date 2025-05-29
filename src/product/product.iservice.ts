@@ -6,7 +6,7 @@ export const PRODUCT_REPOSITORY = 'PRODUCT_REPOSITORY';
 
 export interface IProductRepository {
   create(product: CreateProductDTO): Promise<CreateProductDTO>;
-  findOne(arg0: number): unknown;
+  findOne(arg0: number): Promise<Product | null>;
   remove(arg0: number): unknown;
   findAll(): Promise<Product[]>;
   update(arg0: number, dto: ProductUpdateDTO): unknown;
