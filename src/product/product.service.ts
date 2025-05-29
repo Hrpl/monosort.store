@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { IProductRepository } from './product.iservice';
 import { ProductUpdateDTO } from './dto/product.update';
 import { CreateProductDTO } from './dto/create.product';
+import { ShortProductDTO } from './dto/short.data.product';
 
 @Injectable()
 export class ProductService implements IProductRepository {
@@ -12,6 +13,16 @@ export class ProductService implements IProductRepository {
     @InjectRepository(Product)
     private prodcutRepository: Repository<Product>,
   ) {}
+
+  async shortData(): Promise<ShortProductDTO[]> {
+    const products = await this.prodcutRepository.find({
+      select: ['id', 'name'],
+    });
+
+    return products.map(
+      (product) => new ShortProductDTO(product.id, product.name),
+    );
+  }
 
   update(id: number, dto: ProductUpdateDTO): unknown {
     return this.prodcutRepository.update(id, dto);

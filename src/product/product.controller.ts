@@ -15,6 +15,7 @@ import { Product } from './product.entity';
 import { ApiBody, ApiOperation } from '@nestjs/swagger';
 import { CreateProductDTO } from './dto/create.product';
 import { ProductUpdateDTO } from './dto/product.update';
+import { ShortProductDTO } from './dto/short.data.product';
 
 @Controller('product')
 export class ProductController {
@@ -33,6 +34,12 @@ export class ProductController {
   @ApiOperation({ summary: 'Get all product' })
   async getAny(@Query('id') id: number): Promise<Product | null> {
     return await this.productService.findOne(id);
+  }
+
+  @Get('short_data')
+  @ApiOperation({ summary: 'Get id and data' })
+  async getShortData(): Promise<ShortProductDTO[] | null> {
+    return await this.productService.shortData();
   }
 
   @Post()
