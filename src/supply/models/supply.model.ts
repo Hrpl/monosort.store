@@ -5,6 +5,8 @@ export class SupplyModel {
   @ApiProperty()
   date: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    type: [SupplyProductModel],
+  })
   supplyProduct: SupplyProductModel[];
 }
