@@ -12,6 +12,7 @@ async function bootstrap() {
     .setDescription('')
     .setVersion('1.0')
     .addTag('')
+    .addServer('/api/')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, documentFactory);
