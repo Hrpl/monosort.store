@@ -7,5 +7,5 @@ export const SUPPLY_REPOSITORY = 'SUPPLY_REPOSITORY';
 export interface ISuplyRepository {
   create(supply: SupplyModel): Promise<number>;
   findAll(): Promise<Supply[]>;
-  findSupplyProducts(id: number): Promise<SupplyProduct[]>;
+  findSupplyProducts(idSupply: number): Promise<SupplyProduct[]>;
 }

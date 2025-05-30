@@ -18,8 +18,10 @@ export class SupplyService implements ISuplyRepository {
     private readonly productService: ProductService,
   ) {}
 
-  findSupplyProducts(id: number): Promise<SupplyProduct[]> {
-    return this.supplyProductRepository.findBy({ id });
+  findSupplyProducts(idSupply: number): Promise<SupplyProduct[]> {
+    return this.supplyProductRepository.findBy({
+      supply: { id: idSupply },
+    });
   }
 
   async create(supply: SupplyModel): Promise<number> {
