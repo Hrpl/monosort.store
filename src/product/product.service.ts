@@ -14,6 +14,24 @@ export class ProductService implements IProductRepository {
     private prodcutRepository: Repository<Product>,
   ) {}
 
+  async addQuantity(id: number, quantityToAdd: number): Promise<Product> {
+    const product = await this.prodcutRepository.findOneBy({ id });
+
+    if (!product) {
+      throw new Error('Product not found');
+    }
+
+    if (
+      product.count_in_storage === undefined ||
+      product.count_in_storage === null
+    ) {
+      product.count_in_storage = 0; // Инициализируем, если поле пустое
+    }
+    product.count_in_storage += quantityToAdd;
+
+    return this.prodcutRepository.save(product);
+  }
+
   async shortData(): Promise<ShortProductDTO[]> {
     const products = await this.prodcutRepository.find({
       select: ['id', 'name'],

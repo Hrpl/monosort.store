@@ -5,6 +5,10 @@ import { Supply } from './supply.entity';
 import { SupplyProduct } from './supply.product.entity';
 import { Repository } from 'typeorm';
 import { SupplyModel } from './models/supply.model';
+import { Product } from 'src/product/product.entity';
+import { PRODUCT_REPOSITORY } from '../product/product.iservice';
+import { IProductRepository } from '../product/product.iservice';
+import { Inject } from '@nestjs/common';
 
 @Injectable()
 export class SupplyService implements ISuplyRepository {
@@ -13,6 +17,8 @@ export class SupplyService implements ISuplyRepository {
     private supplyRepository: Repository<Supply>,
     @InjectRepository(SupplyProduct)
     private supplyProductRepository: Repository<SupplyProduct>,
+    @Inject(PRODUCT_REPOSITORY)
+    private readonly productService: IProductRepository,
   ) {}
 
   findSupplyProducts(id: number): Promise<SupplyProduct[]> {
@@ -26,12 +32,25 @@ export class SupplyService implements ISuplyRepository {
       });
 
       if (supply.supplyProduct && supply.supplyProduct.length > 0) {
-        const supplyProducts = supply.supplyProduct.map((product) => ({
-          ...product,
-          productId: { id: product.productId },
-          supplyId: newSupply.id,
-        }));
+        const supplyProducts: SupplyProduct[] = supply.supplyProduct.map(
+          (product) => {
+            const supplyProduct = new SupplyProduct();
+            supplyProduct.count = product.count;
+            supplyProduct.product = { id: product.productId } as Product; // Указываем только ID продукта
+            supplyProduct.supply = newSupply; // Или supplyId: newSupply.id, если используете только ID
+            return supplyProduct;
+          },
+        );
         await this.supplyProductRepository.save(supplyProducts);
+
+        await Promise.all(
+          supply.supplyProduct.map(async (product) => {
+            await this.productService.addQuantity(
+              product.productId,
+              product.count,
+            );
+          }),
+        );
       }
 
       return newSupply.id;
