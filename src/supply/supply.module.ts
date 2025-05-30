@@ -6,11 +6,13 @@ import { SupplyProduct } from './supply.product.entity';
 import { SUPPLY_REPOSITORY } from './supply.iservice';
 import { SupplyService } from './supply.service';
 import { SupplyController } from './supply.controller';
+import { ProductsModule } from '../product/product.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Supply]),
     TypeOrmModule.forFeature([SupplyProduct]),
+    ProductsModule,
   ],
   providers: [
     {

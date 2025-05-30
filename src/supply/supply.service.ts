@@ -6,9 +6,7 @@ import { SupplyProduct } from './supply.product.entity';
 import { Repository } from 'typeorm';
 import { SupplyModel } from './models/supply.model';
 import { Product } from 'src/product/product.entity';
-import { PRODUCT_REPOSITORY } from '../product/product.iservice';
-import { IProductRepository } from '../product/product.iservice';
-import { Inject } from '@nestjs/common';
+import { ProductService } from '../product/product.service';
 
 @Injectable()
 export class SupplyService implements ISuplyRepository {
@@ -17,8 +15,7 @@ export class SupplyService implements ISuplyRepository {
     private supplyRepository: Repository<Supply>,
     @InjectRepository(SupplyProduct)
     private supplyProductRepository: Repository<SupplyProduct>,
-    @Inject(PRODUCT_REPOSITORY)
-    private readonly productService: IProductRepository,
+    private readonly productService: ProductService,
   ) {}
 
   findSupplyProducts(id: number): Promise<SupplyProduct[]> {
