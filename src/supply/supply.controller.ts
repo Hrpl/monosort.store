@@ -12,7 +12,7 @@ export class SupplyController {
     private readonly supplyService: ISuplyRepository,
   ) {}
 
-  @Get()
+  @Get('all')
   @ApiOperation({ summary: 'Get all supply' })
   async getSupplyAll(): Promise<Supply[]> {
     return await this.supplyService.findAll();
