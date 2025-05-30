@@ -3,7 +3,7 @@ import { ISuplyRepository, SUPPLY_REPOSITORY } from './supply.iservice';
 import { Supply } from './supply.entity';
 import { ApiBody, ApiOperation } from '@nestjs/swagger';
 import { SupplyModel } from './models/supply.model';
-import { SupplyProduct } from './supply.product.entity';
+import { GetSupplyProduct } from './models/get.supply.product';
 
 @Controller('supply')
 export class SupplyController {
@@ -20,7 +20,9 @@ export class SupplyController {
 
   @Get()
   @ApiOperation({ summary: 'Get all supply product' })
-  async getSupplyProductAll(@Query('id') id: number): Promise<SupplyProduct[]> {
+  async getSupplyProductAll(
+    @Query('id') id: number,
+  ): Promise<GetSupplyProduct[]> {
     return await this.supplyService.findSupplyProducts(id);
   }
 

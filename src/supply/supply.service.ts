@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { SupplyModel } from './models/supply.model';
 import { Product } from 'src/product/product.entity';
 import { ProductService } from '../product/product.service';
+import { GetSupplyProduct } from './models/get.supply.product';
 
 @Injectable()
 export class SupplyService implements ISuplyRepository {
@@ -18,10 +19,17 @@ export class SupplyService implements ISuplyRepository {
     private readonly productService: ProductService,
   ) {}
 
-  findSupplyProducts(idSupply: number): Promise<SupplyProduct[]> {
-    return this.supplyProductRepository.findBy({
-      supply: { id: idSupply },
+  async findSupplyProducts(idSupply: number): Promise<GetSupplyProduct[]> {
+    const supplyProducts = await this.supplyProductRepository.find({
+      where: {
+        supply: { id: idSupply },
+      },
+      relations: ['product'],
     });
+    return supplyProducts.map((sp) => ({
+      name: sp.product.name,
+      count: sp.count,
+    }));
   }
 
   async create(supply: SupplyModel): Promise<number> {
