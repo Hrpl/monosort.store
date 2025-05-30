@@ -1,3 +1,4 @@
+import { ProductQueryDto } from './dto/product.query';
 import { CreateProductDTO } from './dto/create.product';
 import { ProductUpdateDTO } from './dto/product.update';
 import { ShortProductDTO } from './dto/short.data.product';
@@ -9,7 +10,7 @@ export interface IProductRepository {
   create(product: CreateProductDTO): Promise<CreateProductDTO>;
   findOne(arg0: number): Promise<Product | null>;
   remove(arg0: number): unknown;
-  findAll(): Promise<Product[]>;
+  findAll(query: ProductQueryDto): Promise<Product[]>;
   update(arg0: number, dto: ProductUpdateDTO): unknown;
   shortData(): Promise<ShortProductDTO[]>;
   addQuantity(id: number, quantityToAdd: number): Promise<Product>;

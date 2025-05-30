@@ -16,6 +16,7 @@ import { ApiBody, ApiOperation } from '@nestjs/swagger';
 import { CreateProductDTO } from './dto/create.product';
 import { ProductUpdateDTO } from './dto/product.update';
 import { ShortProductDTO } from './dto/short.data.product';
+import { ProductQueryDto } from './dto/product.query';
 
 @Controller('product')
 export class ProductController {
@@ -24,10 +25,11 @@ export class ProductController {
     private readonly productService: IProductRepository,
   ) {}
 
-  @Get()
+  @Post('find')
   @ApiOperation({ summary: 'Get all product' })
-  async getAll(): Promise<Product[]> {
-    return await this.productService.findAll();
+  @ApiBody({ type: ProductQueryDto })
+  async getAll(query: ProductQueryDto): Promise<Product[]> {
+    return await this.productService.findAll(query);
   }
 
   @Get('any')

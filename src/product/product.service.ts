@@ -6,6 +6,7 @@ import { IProductRepository } from './product.iservice';
 import { ProductUpdateDTO } from './dto/product.update';
 import { CreateProductDTO } from './dto/create.product';
 import { ShortProductDTO } from './dto/short.data.product';
+import { ProductQueryDto } from './dto/product.query';
 
 @Injectable()
 export class ProductService implements IProductRepository {
@@ -58,7 +59,31 @@ export class ProductService implements IProductRepository {
     return this.prodcutRepository.delete(id);
   }
 
-  findAll(): Promise<Product[]> {
-    return this.prodcutRepository.find();
+  async findAll(query: ProductQueryDto): Promise<Product[]> {
+    const { productName, sortBy = 'count', sortOrder = 'DESC' } = query;
+    const queryBuilder = this.prodcutRepository.createQueryBuilder('product');
+
+    if (productName) {
+      queryBuilder.andWhere('product.name LIKE :productName', {
+        productName: `%${productName}%`,
+      });
+    }
+
+    const sortField =
+      sortBy === 'productName' ? 'product.name' : `sp.${sortBy}`;
+
+    queryBuilder.orderBy(sortField, sortOrder);
+
+    const supplyProducts = await queryBuilder.getMany();
+
+    return supplyProducts.map((sp) => ({
+      id: sp.id,
+      name: sp.name,
+      count_in_storage: sp.count_in_storage,
+      last_order: sp.last_order,
+      measure: sp.measure,
+      provider: sp.provider,
+      supplyProduct: sp.supplyProduct,
+    }));
   }
 }
