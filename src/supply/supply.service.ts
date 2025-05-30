@@ -28,6 +28,7 @@ export class SupplyService implements ISuplyRepository {
       if (supply.supplyProduct && supply.supplyProduct.length > 0) {
         const supplyProducts = supply.supplyProduct.map((product) => ({
           ...product,
+          productId: { id: product.productId },
           supplyId: newSupply.id,
         }));
         await this.supplyProductRepository.save(supplyProducts);

@@ -10,5 +10,6 @@ export class SupplyModel {
   @ApiProperty({
     type: [SupplyProductModel],
   })
+  @Column()
   supplyProduct: SupplyProductModel[];
 }
