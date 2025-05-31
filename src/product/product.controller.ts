@@ -28,7 +28,7 @@ export class ProductController {
   @Post('find')
   @ApiOperation({ summary: 'Get all product' })
   @ApiBody({ type: ProductQueryDto })
-  async getAll(query: ProductQueryDto): Promise<Product[]> {
+  async getAll(@Body() query: ProductQueryDto): Promise<Product[]> {
     return await this.productService.findAll(query);
   }
 

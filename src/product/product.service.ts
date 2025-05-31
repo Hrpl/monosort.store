@@ -60,19 +60,17 @@ export class ProductService implements IProductRepository {
   }
 
   async findAll(query: ProductQueryDto): Promise<Product[]> {
-    const { productName, sortBy = 'count', sortOrder = 'DESC' } = query;
     const queryBuilder = this.prodcutRepository.createQueryBuilder('product');
 
-    if (productName) {
+    if (query.search) {
       queryBuilder.andWhere('product.name LIKE :productName', {
-        productName: `%${productName}%`,
+        productName: `%${query.search}%`,
       });
     }
 
-    const sortField =
-      sortBy === 'productName' ? 'product.name' : `sp.${sortBy}`;
+    const sortField = `product.${query.sortBy}`;
 
-    queryBuilder.orderBy(sortField, sortOrder);
+    queryBuilder.orderBy(sortField, query.sortOrder);
 
     const supplyProducts = await queryBuilder.getMany();
 

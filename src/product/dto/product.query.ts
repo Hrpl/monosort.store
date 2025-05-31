@@ -3,9 +3,8 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 export class ProductQueryDto {
   @ApiPropertyOptional({
     description: 'Product name filter',
-    example: 'Кофе',
   })
-  productName?: string;
+  search?: string;
 
   @ApiPropertyOptional({
     description: 'Sort field',
