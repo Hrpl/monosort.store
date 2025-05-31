@@ -14,4 +14,5 @@ export interface IProductRepository {
   update(arg0: number, dto: ProductUpdateDTO): unknown;
   shortData(): Promise<ShortProductDTO[]>;
   addQuantity(id: number, quantityToAdd: number): Promise<Product>;
+  discardProduct(id: number, quantity: number): Promise<unknown>;
 }

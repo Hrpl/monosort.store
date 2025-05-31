@@ -5,6 +5,7 @@ import {
   Get,
   HttpCode,
   Inject,
+  Patch,
   Post,
   Put,
   Query,
@@ -55,7 +56,7 @@ export class ProductController {
   @ApiOperation({ summary: 'Delete product' })
   @HttpCode(204)
   deleteProduct(@Query('id') id: number): undefined {
-    this.productService.remove(+id);
+    this.productService.remove(id);
   }
 
   @Put()
@@ -63,5 +64,11 @@ export class ProductController {
   @ApiBody({ type: ProductUpdateDTO })
   updateProduct(@Body() model: ProductUpdateDTO, @Query() id: number) {
     return this.productService.update(id, model);
+  }
+
+  @Patch()
+  @ApiOperation({ summary: 'Discard product' })
+  discardProduct(@Query('id') id: number, @Query('quantity') quantity: number) {
+    return this.productService.discardProduct(id, quantity);
   }
 }
