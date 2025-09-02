@@ -79,3 +79,6 @@ $ mau deploy
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+
+<!-- Security scan triggered at 2025-09-02 15:13:24 -->
